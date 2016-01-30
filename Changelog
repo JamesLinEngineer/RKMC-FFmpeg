@@ -1,6 +1,9 @@
 Entries are sorted chronologically from oldest to youngest within each release,
 releases are sorted from youngest to oldest.
 
+version <next>:
+- DXVA2-accelerated HEVC Main10 decoding
+
 version 3.0.1:
 avcodec/libutvideodec: copy frame so it has reference counters when refcounted_frames is set
 avformat/rtpdec_jpeg: fix low contrast image on low quality setting
@@ -42,7 +45,6 @@ vc2enc: fix use of uninitialized variables in the rate control system, correctly
 aacenc: optimize encoding speed
 avcodec/diracdec: check bitstream size related fields for overflows
 avcodec/h264_slice: Check PPS more extensively when its not copied
-
 
 version 3.0:
 - Common Encryption (CENC) MP4 encoding and decoding support
