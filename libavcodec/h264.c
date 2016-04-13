@@ -1634,6 +1634,11 @@ again:
             case NAL_SPS_EXT:
             case NAL_AUXILIARY_SLICE:
                 break;
+            case NAL_PREFIX:
+            case NAL_SUB_SPS:
+            case NAL_SLICE_EXT:
+                avctx->codec_tag = AV_CODEC_ID_H264MVC;
+                break;
             case NAL_FF_IGNORE:
                 break;
             default:
