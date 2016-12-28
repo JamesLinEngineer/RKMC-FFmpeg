@@ -1087,6 +1087,21 @@ int ff_hevc_parse_sps(HEVCSPS *sps, GetBitContext *gb, unsigned int *sps_id,
         sps->output_height              = sps->height;
     }
 
+    avctx->width = sps->width;
+    avctx->height = sps->height;
+    avctx->pix_fmt = sps->pix_fmt;
+    
+    if (vui_present) {
+        if (sps->vui.video_signal_type_present_flag) {
+            avctx->color_range = sps->vui.video_full_range_flag ? AVCOL_RANGE_JPEG : AVCOL_RANGE_MPEG;
+	    }
+
+	if (sps->vui.colour_description_present_flag) {
+            avctx->color_primaries = sps->vui.colour_primaries;
+	        avctx->color_trc = sps->vui.transfer_characteristic;
+	    }
+    }
+
     // Inferred parameters
     sps->log2_ctb_size = sps->log2_min_cb_size +
                          sps->log2_diff_max_min_coding_block_size;
