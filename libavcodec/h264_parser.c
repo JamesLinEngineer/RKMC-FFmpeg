@@ -86,14 +86,17 @@ static int h264_find_frame_end(H264ParseContext *p, const uint8_t *buf,
         } else if (state <= 5) {
             int nalu_type = buf[i] & 0x1F;
             if (nalu_type == NAL_SEI || nalu_type == NAL_SPS ||
-                nalu_type == NAL_PPS || nalu_type == NAL_AUD) {
+                nalu_type == NAL_PPS || nalu_type == NAL_AUD ||
+                nalu_type == NAL_SUB_SPS) {
                 if (pc->frame_start_found) {
                     i++;
                     goto found;
                 }
             } else if (nalu_type == NAL_SLICE || nalu_type == NAL_DPA ||
-                       nalu_type == NAL_IDR_SLICE) {
+                       nalu_type == NAL_IDR_SLICE || nalu_type == NAL_SLICE_EXT) {
                 state += 8;
+                if (nalu_type == NAL_SLICE_EXT)
+                    i += 3;
                 continue;
             }
             state = 7;
